@@ -1,7 +1,6 @@
 # Stripe Payment (Client-Server Mocks)
 
-Client Mockup:
-Steps:
+Client Mockup Steps:
 1. Run the Project '\stripePayment\ClientStripePay.csproj'
 2. Enter the secret key for the Stripe account.
 3. Enter email for the new customer. Press enter.
@@ -10,7 +9,7 @@ Steps:
 6. After that you will shown the client_secret for the PI object.
 7. Copy the secret for use in the Server mockup project.
 
-Server Mockup:
+Server Mockup Steps:
 1. Open the project '\stripePayment\Server\stripePayWeb.csproj'
 2. You will be prompted for the PublishableKEy for the same Stripe account.
 3. Next you will be presented with the Stripe elements page where you can enter:
