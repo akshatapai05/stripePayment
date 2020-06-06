@@ -2,7 +2,8 @@
 // for details on configuring this project to bundle and minify static web assets.
 
 // Write your Javascript code.
-var stripe = Stripe('pk_test_crE47RSmMiLYgYyeV8Ysukd300uyVhuoDk');
+var stripePublishKey = prompt("Please enter Stripe publish key", "pk_...");
+var stripe = Stripe(stripePublishKey);
 var elements = stripe.elements();
 
 var card = elements.create('card', {
@@ -31,6 +32,12 @@ var card = elements.create('card', {
     },
 });
 card.mount('#card-element');
+
+
+//var paymentSuccessElement = document.querySelector('.paymentsuccess');
+//var paymentErrorElement = document.querySelector('.paymentfailed');
+//paymentSuccessElement.classList.remove('visible');
+//paymentErrorElement.classList.remove('visible');
 
 var inputs = document.querySelectorAll('input.field');
 Array.prototype.forEach.call(inputs, function (input) {
@@ -81,9 +88,17 @@ function confirmPayment() {
         })
         .then(function (result) {
             // Handle result.error or result.paymentIntent
+            if (result.error) {
+                // Handle error here
+                //var errorElement = document.querySelector('.paymentfailed');
+                //errorElement.querySelector('.failed_reason').textContent = result.error;
+                //errorElement.classList.add('visible');
+            } else if (response.paymentIntent && response.paymentIntent.status === 'succeeded') {
+                // Handle successful payment here
+                //var successElement = document.querySelector('.paymentsuccess');
+                //successElement.classList.add('visible');
+            }
         });
-
-    
 }
 
 function stripeTokenHandler(token) {

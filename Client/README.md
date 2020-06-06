@@ -1,1 +1,1 @@
-# Stripe web payment
+# StripePayment

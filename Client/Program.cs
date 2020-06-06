@@ -16,11 +16,7 @@
             string email = Console.ReadLine();
 
             // Create a customer
-            var customer = Helper.CreateCustomer("Someemail@gmail.com");
-
-            // Get customer by id
-            var service = new CustomerService();
-            var existingCustomer = service.Get("cus_HNUUIzXddNpRE7");
+            var customer = Helper.CreateCustomer(email);
 
             var paymentMethodService = new PaymentMethodService();
             var paymentIntentService = new PaymentIntentService();
@@ -39,12 +35,14 @@
             string currency = Console.ReadLine();
 
             //Create a paymentIntent/TransactionIntent for the customer
-            var intent = Helper.CreatePaymentIntent(amount, currency, existingCustomer, paymentIntentService);
+            var intent = Helper.CreatePaymentIntent(amount, currency, customer, paymentIntentService);
 
             Console.WriteLine($"Intent has been create with client secret: '{intent.ClientSecret}'.\nTo verify please check the Stripe payments dashboard.");
             Console.Write("You can exit the program now. Use the web server to complete the request via Stripe Elements. Or if you want to add the payment method here, you can press any key to coninue.");
             Console.ReadLine();
+            return;
 
+            //If you want to add the payment method here
             Console.WriteLine("Do you want to enter a payment method? (y/n)");
             char response = Console.ReadLine().Single();
             if (response == 'y' || response == 'Y')
@@ -64,13 +62,13 @@
 
                 // Create and attach payment method to customer
                 var cardPaymentMethod = Helper.CreateCardPaymentMethod(cardNumber, expMonth, expYear, cvc, paymentMethodService);
-                Helper.AttachPaymentMethod(existingCustomer, cardPaymentMethod, paymentMethodService);
+                Helper.AttachPaymentMethod(customer, cardPaymentMethod, paymentMethodService);
 
                 // Retrieve the paymentintent/transactionIntent for a customer
                 var paymentIntents = paymentIntentService.List(
                     new PaymentIntentListOptions
                     {
-                        Customer = existingCustomer.Id,
+                        Customer = customer.Id,
                     })
                     .OrderBy(x => x.Created).ToList();
 
