@@ -1,0 +1,32 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Home page";
+}
+
+<script src="https://js.stripe.com/v3/"></script>
+<form id="payment-form">
+    <label>
+        <input name="payment-intent-client-secret" id="payment-intent-client-secret" class="field is-empty" placeholder="pi_xxxxxxxxxxxxxxxxx" />
+        <span><span>Payment-Intent Client Secret</span></span>
+    </label>
+    <label>
+        <input name="cardholder-name" class="field is-empty" placeholder="Jane Doe" />
+        <span><span>Name</span></span>
+    </label>
+    <label>
+        <input class="field is-empty" type="tel" placeholder="(123) 456-7890" />
+        <span><span>Phone number</span></span>
+    </label>
+    <label>
+        <div id="card-element" class="field is-empty"></div>
+        <span><span>Credit or debit card</span></span>
+    </label>
+    <button type="submit">Pay $25</button>
+    <div class="outcome">
+        <div class="error" role="alert"></div>
+        <div class="success">
+            Success! Your Stripe token is <span class="token"></span>
+        </div>
+    </div>
+</form>
